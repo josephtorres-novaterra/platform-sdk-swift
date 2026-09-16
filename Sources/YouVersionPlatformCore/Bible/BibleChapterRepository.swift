@@ -154,10 +154,12 @@ public protocol BibleChapterContentProviding: Sendable {
     func chapterContent(for reference: BibleReference) async throws -> BibleContentResponse<String>
 }
 
-final class BibleChapterContentAPI: BibleChapterContentProviding {
-    init() {}
+/// The SDK's own provider: the platform, directly. Public so an app that supplies another can
+/// keep this one as its fallback.
+public final class BibleChapterContentAPI: BibleChapterContentProviding {
+    public init() {}
 
-    func chapterContent(for reference: BibleReference) async throws -> BibleContentResponse<String> {
+    public func chapterContent(for reference: BibleReference) async throws -> BibleContentResponse<String> {
         try await YouVersionAPI.Bible.chapterResponse(reference: reference)
     }
 }
